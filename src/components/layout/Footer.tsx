@@ -47,12 +47,14 @@ export default function Footer() {
           ©Yanegi 2026–2032. All rights reserved
         </span>
         <div className="flex" style={{ gap: 22 }}>
-          {["Privacy policy", "Terms"].map((l) => (
-            <Link key={l} href="#" className="no-underline transition-colors hover:text-white/65"
-              style={{ fontSize: 14, color: "rgba(255,255,255,0.35)" }}>
-              {l}
-            </Link>
-          ))}
+          <Link href="/privacy" className="no-underline transition-colors hover:text-white/65"
+            style={{ fontSize: 14, color: "rgba(255,255,255,0.35)" }}>
+            Privacy policy
+          </Link>
+          <Link href="/terms" className="no-underline transition-colors hover:text-white/65"
+            style={{ fontSize: 14, color: "rgba(255,255,255,0.35)" }}>
+            Terms
+          </Link>
         </div>
       </div>
     </footer>
