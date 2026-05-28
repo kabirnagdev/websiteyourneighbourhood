@@ -127,12 +127,6 @@ export default function ShowcaseSection() {
                   playsInline
                   style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
                 />
-              ) : item.gifSrc ? (
-                <img
-                  src={item.gifSrc}
-                  alt={item.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
-                />
               ) : (
                 <div
                   style={{
