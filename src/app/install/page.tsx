@@ -7,74 +7,79 @@ export default function InstallPage() {
     <>
       <Navbar />
       <main
+        className="blueprint"
         style={{
           minHeight: "100vh",
-          backgroundImage: "url('/yanegi-bg.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "60% 20%",
-          backgroundRepeat: "no-repeat",
+          background: "#e6e8ea",
           display: "flex",
           alignItems: "center",
-          paddingTop: 62,
+          paddingTop: 56,
           overflow: "hidden",
           position: "relative",
         }}
       >
-        {/* Left fade so text stays readable without darkening the image */}
-        <div style={{
-          position: "absolute", inset: 0, zIndex: 0,
-          background: "linear-gradient(to right, rgba(220,232,248,0.92) 0%, rgba(220,232,248,0.7) 35%, rgba(220,232,248,0.1) 55%, transparent 70%)",
-          pointerEvents: "none",
-        }} />
-
+        {/* Background image, framed as evidence */}
         <div
+          className="hidden md:block"
           style={{
-            position: "relative",
-            zIndex: 1,
-            width: "100%",
-            maxWidth: 560,
-            margin: "0 auto 0 8%",
-            padding: "80px 0",
+            position: "absolute",
+            top: "12%",
+            right: "5%",
+            bottom: "12%",
+            width: "44%",
+            border: "1px solid #0a0a0a",
+            backgroundImage: "url('/yanegi-bg.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "60% 20%",
           }}
         >
+          <span
+            className="hud-label"
+            style={{ position: "absolute", bottom: -1, left: -1, background: "#0a0a0a", color: "#e6e8ea", padding: "5px 10px" }}
+          >
+            FIG_01 — THE APP IN THE WILD
+          </span>
+        </div>
+
+        <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 560, margin: "0 auto 0 6%", padding: "80px 24px" }}>
+          <div className="hud-label" style={{ color: "#2b38ff", marginBottom: 18 }}>
+            [ DEPLOY — ANDROID BUILD ]
+          </div>
           <h1
             style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: "clamp(28px, 3.5vw, 46px)",
+              fontSize: "clamp(34px, 4.5vw, 64px)",
               fontWeight: 700,
-              letterSpacing: "-1.5px",
-              lineHeight: 1.15,
-              color: "#111",
-              marginBottom: 20,
+              letterSpacing: "-0.04em",
+              lineHeight: 1.0,
+              textTransform: "uppercase",
+              color: "#0a0a0a",
+              marginBottom: 22,
             }}
           >
-            Download Yanegi<br />for Android
+            Download
+            <br />
+            Yanegi<span style={{ color: "#2b38ff" }}>_</span>
           </h1>
           <p
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: 16,
-              color: "rgba(17,17,17,0.7)",
-              lineHeight: 1.7,
-              marginBottom: 40,
-              maxWidth: 380,
-            }}
+            className="mono"
+            style={{ fontSize: 13, color: "rgba(10,10,10,0.65)", lineHeight: 1.8, marginBottom: 40, maxWidth: 400 }}
           >
-            Find real hangouts happening near you — sports, music, food, and more. Create your own event or join one in seconds. Free to download.
+            {">"} Find real hangouts happening near you — sports, music, food,
+            and more. Create your own event or join one in seconds. Free to
+            download.
           </p>
 
-          <a
-            href={PLAY_STORE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: "inline-block" }}
-          >
+          <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
             <img
               src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
               alt="Get it on Google Play"
-              style={{ height: 68, width: "auto" }}
+              style={{ height: 64, width: "auto" }}
             />
           </a>
+
+          <div className="hud-label" style={{ marginTop: 28, opacity: 0.5 }}>
+            VERSION: LATEST&nbsp;&nbsp;//&nbsp;&nbsp;SIZE: LIGHT&nbsp;&nbsp;//&nbsp;&nbsp;COST: FREE
+          </div>
         </div>
       </main>
     </>

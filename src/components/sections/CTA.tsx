@@ -14,7 +14,6 @@ const ROW1 = [
   { icon: "🎮", label: "LAN Party" },
   { icon: "🌄", label: "Sunrise Hike" },
 ];
-
 const ROW2 = [
   { icon: "🎲", label: "Board Game Night" },
   { icon: "📸", label: "Photography Walk" },
@@ -28,47 +27,39 @@ const ROW2 = [
   { icon: "🏄", label: "Surf Lessons" },
 ];
 
-const ROW3 = [
-  { icon: "🌮", label: "Taco Tuesday" },
-  { icon: "🎯", label: "Archery Class" },
-  { icon: "🎬", label: "Movie Night" },
-  { icon: "🏓", label: "Ping Pong" },
-  { icon: "🌿", label: "Nature Trail" },
-  { icon: "🎻", label: "Jazz Evening" },
-  { icon: "🤸", label: "Acrobatics" },
-  { icon: "🍦", label: "Ice Cream Social" },
-  { icon: "🚣", label: "Kayaking" },
-  { icon: "🎡", label: "Carnival Night" },
-];
+const CHIP_ACCENTS = ["#c8f021", "#2b38ff", "#ff4d29", "#efede7"];
 
 function TickerRow({ items, direction }: { items: typeof ROW1; direction: "left" | "right" }) {
   const doubled = [...items, ...items];
-  const anim = direction === "left" ? "ctaScrollLeft" : "ctaScrollRight";
-  const dur = direction === "left" ? 36 : 40;
+  const anim = direction === "left" ? "marqueeLeft" : "marqueeRight";
+  const dur = direction === "left" ? 36 : 42;
   return (
     <div style={{ overflow: "hidden", width: "100%" }}>
-      <div style={{ display: "flex", width: "max-content", gap: 12, animation: `${anim} ${dur}s linear infinite` }}>
-        {doubled.map((item, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex", alignItems: "center", gap: 9,
-              background: "rgba(255,255,255,0.65)",
-              border: "1px solid rgba(0,0,0,0.07)",
-              borderRadius: 100,
-              padding: "9px 20px 9px 12px",
-              flexShrink: 0,
-              boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
-            }}
-          >
-            <span style={{ width: 32, height: 32, background: "#f0f0f0", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>
-              {item.icon}
-            </span>
-            <span style={{ fontFamily: "'Poppins', sans-serif", fontSize: 15, fontWeight: 500, color: "#111", whiteSpace: "nowrap" }}>
+      <div style={{ display: "flex", width: "max-content", gap: 10, animation: `${anim} ${dur}s linear infinite` }}>
+        {doubled.map((item, i) => {
+          const accent = CHIP_ACCENTS[i % CHIP_ACCENTS.length];
+          return (
+            <span
+              key={i}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 9,
+                border: `1.5px solid ${accent}`,
+                color: accent,
+                borderRadius: 100,
+                padding: "9px 18px 9px 12px",
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+                fontSize: 14,
+                fontWeight: 600,
+              }}
+            >
+              <span style={{ fontSize: 16 }}>{item.icon}</span>
               {item.label}
             </span>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -76,53 +67,69 @@ function TickerRow({ items, direction }: { items: typeof ROW1; direction: "left"
 
 export default function CTASection() {
   return (
-    <section
-      className="text-center"
-      style={{
-        background: "radial-gradient(ellipse 700px 520px at 50% 42%, rgba(110,168,230,0.36) 0%, rgba(150,195,242,0.16) 44%, transparent 68%), #EEF1F6",
-        overflow: "hidden",
-      }}
-    >
-      <style>{`
-        @keyframes ctaScrollLeft  { 0% { transform: translateX(0);    } 100% { transform: translateX(-50%); } }
-        @keyframes ctaScrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0);    } }
-      `}</style>
-
-      {/* CTA copy + buttons */}
+    <section style={{ background: "#111", overflow: "hidden", padding: "32px 0 72px" }}>
+      {/* Big lime card */}
       <motion.div
-        className="mx-auto"
-        style={{ maxWidth: 780, padding: "130px 52px 72px" }}
         initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          background: "#c8f021",
+          borderRadius: 36,
+          margin: "0 24px 56px",
+          padding: "clamp(48px, 7vw, 96px) clamp(24px, 5vw, 72px)",
+          position: "relative",
+          overflow: "hidden",
+          textAlign: "center",
+        }}
       >
-        <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(36px,5vw,56px)", fontWeight: 500, letterSpacing: "-2px", lineHeight: 1.08, color: "#111", marginBottom: 20 }}>
-          Never run out of<br />plans again.
+        {/* decorative emoji tiles in card corners */}
+        <img src="/emojis/confetti-ball_1f38a.png" alt="" width={64} height={64} style={{ position: "absolute", top: "12%", left: "6%", transform: "rotate(-10deg)", opacity: 0.9 }} />
+        <img src="/emojis/grinning-face_1f600.png" alt="" width={56} height={56} style={{ position: "absolute", bottom: "14%", right: "7%", transform: "rotate(8deg)", opacity: 0.9 }} />
+
+        <div className="hud-label" style={{ color: "#111", marginBottom: 18, opacity: 0.7 }}>
+          /05 — YOUR MOVE
+        </div>
+        <h2
+          style={{
+            fontSize: "clamp(40px,6.5vw,92px)",
+            fontWeight: 700,
+            letterSpacing: "-0.04em",
+            lineHeight: 0.98,
+            textTransform: "uppercase",
+            color: "#111",
+            margin: "0 0 22px",
+          }}
+        >
+          Never run out
+          <br />
+          of plans<span style={{ color: "#ff4d29" }}>.</span>
         </h2>
-        <p style={{ fontSize: 16, fontWeight: 400, color: "rgba(17,17,17,0.5)", lineHeight: 1.65, marginBottom: 48, maxWidth: 460, marginLeft: "auto", marginRight: "auto" }}>
-          Yanegi is free to join. Find hangouts happening around you or create your own and bring people together.
+        <p style={{ fontSize: 16, color: "rgba(17,17,17,0.75)", lineHeight: 1.7, margin: "0 auto 40px", maxWidth: 440, fontWeight: 500 }}>
+          Yanegi is free to join. Find hangouts happening around you or create
+          your own and bring people together.
         </p>
         <div className="flex gap-3 justify-center flex-wrap">
           <button
-            className="border-none cursor-pointer transition-opacity hover:opacity-75"
-            style={{ background: "#111", color: "#fff", padding: "14px 32px", borderRadius: 100, fontSize: 15, fontWeight: 600, fontFamily: "inherit" }}
+            className="border-none cursor-pointer transition-transform hover:scale-105"
+            style={{ background: "#111", color: "#fff", padding: "16px 36px", borderRadius: 100, fontSize: 15, fontWeight: 700 }}
           >
-            Join for Free
+            Join for free →
           </button>
           <button
-            className="cursor-pointer transition-colors flex items-center gap-1.5"
-            style={{ background: "transparent", color: "#111", border: "1.5px solid rgba(17,17,17,0.28)", padding: "14px 32px", borderRadius: 100, fontSize: 15, fontWeight: 500, fontFamily: "inherit" }}
+            className="cursor-pointer transition-colors hover:bg-[#111] hover:text-[#c8f021]"
+            style={{ background: "transparent", color: "#111", border: "2px solid #111", padding: "14px 34px", borderRadius: 100, fontSize: 15, fontWeight: 700 }}
           >
-            Explore Plans ›
+            Explore plans
           </button>
         </div>
       </motion.div>
 
-      {/* 3-row scrolling ticker */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, paddingBottom: 80 }}>
+      {/* scrolling tickers */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         <TickerRow items={ROW1} direction="left" />
         <TickerRow items={ROW2} direction="right" />
-        <TickerRow items={ROW3} direction="left" />
       </div>
     </section>
   );

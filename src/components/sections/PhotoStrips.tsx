@@ -24,29 +24,27 @@ const PHOTOS2 = [
   "/events2/f8b73780da65710fe2fbabb61849d61f.jpg",
 ];
 
+const ACCENTS = ["#c8f021", "#2b38ff", "#ff4d29"];
+
 function Strip({ photos, direction }: { photos: string[]; direction: "left" | "right" }) {
   const doubled = [...photos, ...photos];
-  const animName = direction === "left" ? "scrollLeft" : "scrollRight";
+  const animName = direction === "left" ? "marqueeLeft" : "marqueeRight";
   return (
     <div style={{ overflow: "hidden", width: "100%" }}>
-      <div
-        style={{
-          display: "flex",
-          gap: 14,
-          width: "max-content",
-          animation: `${animName} 32s linear infinite`,
-        }}
-      >
+      <div style={{ display: "flex", gap: 16, width: "max-content", animation: `${animName} 38s linear infinite`, padding: "10px 0" }}>
         {doubled.map((src, i) => (
           <div
             key={i}
+            className="transition-transform duration-300 hover:scale-105 hover:!rotate-0"
             style={{
-              width: 240,
-              height: 160,
-              borderRadius: 16,
+              width: 250,
+              height: 165,
+              borderRadius: 20,
               overflow: "hidden",
               flexShrink: 0,
-              boxShadow: "0 4px 18px rgba(0,0,0,0.10)",
+              border: "2.5px solid #111",
+              boxShadow: `5px 6px 0 ${ACCENTS[i % 3]}`,
+              transform: `rotate(${i % 2 === 0 ? -1.2 : 1.2}deg)`,
             }}
           >
             <img
@@ -64,40 +62,21 @@ function Strip({ photos, direction }: { photos: string[]; direction: "left" | "r
 
 export default function PhotoStrips() {
   return (
-    <section
-      style={{
-        background: "#EEF1F6",
-        paddingBottom: 80,
-        overflow: "hidden",
-      }}
-    >
-      <style>{`
-        @keyframes scrollLeft {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        @keyframes scrollRight {
-          0%   { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-      `}</style>
-
-      {/* Heading */}
-      <div style={{ textAlign: "center", paddingBottom: 44, paddingTop: 8 }}>
-        <span
-          style={{
-            fontFamily: "'Poppins', sans-serif",
-            fontSize: "clamp(28px, 3vw, 42px)",
-            fontWeight: 700,
-            color: "#111",
-            letterSpacing: "-1px",
-          }}
-        >
-          Find your hangouts
+    <section style={{ background: "#efede7", padding: "32px 0 80px", overflow: "hidden" }}>
+      {/* Section header */}
+      <div className="flex items-center justify-between flex-wrap" style={{ padding: "0 24px 32px", gap: 12 }}>
+        <div className="flex items-center" style={{ gap: 16 }}>
+          <span className="hud-label" style={{ background: "#ff4d29", color: "#fff", padding: "6px 12px", borderRadius: 100 }}>/02</span>
+          <h2 style={{ fontSize: "clamp(28px,3.6vw,48px)", fontWeight: 700, letterSpacing: "-0.03em", textTransform: "uppercase", margin: 0 }}>
+            Caught in the wild
+          </h2>
+        </div>
+        <span className="hud-label" style={{ opacity: 0.55 }}>
+          REAL HANGOUTS — UNFILTERED ★
         </span>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <Strip photos={PHOTOS} direction="left" />
         <Strip photos={PHOTOS2} direction="right" />
       </div>

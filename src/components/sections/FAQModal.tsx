@@ -82,24 +82,27 @@ export default function FAQModal({ open, onClose }: FAQModalProps) {
             {/* Close button */}
             <button
               onClick={onClose}
+              className="hud-label"
               style={{
                 display: "block", marginLeft: "auto", marginBottom: 32,
-                background: "rgba(255,255,255,0.1)", border: "none",
-                color: "#fff", width: 40, height: 40, borderRadius: "50%",
-                fontSize: 20, cursor: "pointer", lineHeight: "40px", textAlign: "center",
+                background: "transparent", border: "1px solid rgba(230,232,234,0.4)",
+                color: "#e6e8ea", padding: "10px 16px",
+                fontSize: 10, cursor: "pointer",
               }}
             >
-              ✕
+              [ ESC ] CLOSE ✕
             </button>
 
             {/* Heading */}
+            <div className="hud-label" style={{ color: "#c8f021", marginBottom: 14 }}>
+              [ TRANSMISSION LOG — COMMON QUERIES ]
+            </div>
             <h2 style={{
-              fontFamily: "var(--font-poppins), sans-serif",
               fontSize: "clamp(32px, 5vw, 58px)",
-              fontWeight: 700, letterSpacing: "-1.5px",
-              color: "#fff", marginBottom: 48, lineHeight: 1.1,
+              fontWeight: 700, letterSpacing: "-0.03em", textTransform: "uppercase",
+              color: "#e6e8ea", marginBottom: 48, lineHeight: 1.02,
             }}>
-              Frequently asked<br />questions
+              Frequently asked<br />questions_
             </h2>
 
             {/* Accordion */}
@@ -110,9 +113,8 @@ export default function FAQModal({ open, onClose }: FAQModalProps) {
                   <div
                     key={i}
                     style={{
-                      background: "rgba(255,255,255,0.07)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      borderRadius: 16,
+                      background: isOpen ? "rgba(43,56,255,0.12)" : "rgba(230,232,234,0.04)",
+                      border: "1px solid rgba(230,232,234,0.22)",
                       overflow: "hidden",
                       cursor: "pointer",
                     }}
@@ -120,20 +122,23 @@ export default function FAQModal({ open, onClose }: FAQModalProps) {
                   >
                     <div style={{
                       display: "flex", justifyContent: "space-between", alignItems: "center",
-                      padding: "22px 28px",
+                      padding: "20px 24px", gap: 16,
                     }}>
-                      <span style={{
-                        fontFamily: "var(--font-poppins), sans-serif",
-                        fontSize: 16, fontWeight: 600, color: "#fff",
-                      }}>
-                        {faq.q}
+                      <span style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
+                        <span className="hud-label" style={{ color: "#c8f021", flexShrink: 0 }}>
+                          Q_{String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span style={{ fontSize: 15, fontWeight: 600, color: "#e6e8ea", letterSpacing: "0.01em" }}>
+                          {faq.q}
+                        </span>
                       </span>
                       <motion.span
-                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        className="mono"
+                        animate={{ rotate: isOpen ? 45 : 0 }}
                         transition={{ duration: 0.25 }}
-                        style={{ fontSize: 18, color: "rgba(255,255,255,0.5)", flexShrink: 0, marginLeft: 16 }}
+                        style={{ fontSize: 18, color: "rgba(230,232,234,0.5)", flexShrink: 0 }}
                       >
-                        ∨
+                        +
                       </motion.span>
                     </div>
 
@@ -147,11 +152,10 @@ export default function FAQModal({ open, onClose }: FAQModalProps) {
                           transition={{ duration: 0.3, ease: "easeInOut" }}
                           style={{ overflow: "hidden" }}
                         >
-                          <p style={{
-                            padding: "0 28px 22px",
-                            fontFamily: "var(--font-dm), sans-serif",
-                            fontSize: 15, color: "rgba(255,255,255,0.6)",
-                            lineHeight: 1.7, margin: 0,
+                          <p className="mono" style={{
+                            padding: "0 24px 22px",
+                            fontSize: 12.5, color: "rgba(230,232,234,0.6)",
+                            lineHeight: 1.8, margin: 0,
                           }}>
                             {faq.a}
                           </p>

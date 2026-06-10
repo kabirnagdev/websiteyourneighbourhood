@@ -7,9 +7,30 @@ import FAQModal from "@/components/sections/FAQModal";
 
 const NAV_LINKS = ["About", "Pricing", "Journal", "Contact", "FAQ"];
 
+function SysClock() {
+  const [time, setTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    const tick = () =>
+      setTime(
+        new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" })
+      );
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span className="hud-label hidden lg:block" style={{ fontSize: 11, fontWeight: 700, opacity: 0.65 }}>
+      {time ?? "--:--:--"}
+      <span style={{ animation: "blink 1.2s steps(1) infinite", color: "#ff4d29" }}>_</span>
+    </span>
+  );
+}
+
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [faqOpen, setFaqOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 10);
@@ -22,43 +43,41 @@ export default function Navbar() {
       <nav
         className="fixed top-0 left-0 right-0 z-50"
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr auto 1fr",
+          display: "flex",
           alignItems: "center",
-          height: 62,
-          padding: "0 52px",
-          transition: "background 0.3s",
-          background: scrolled ? "rgba(238,241,246,0.88)" : "transparent",
-          backdropFilter: scrolled ? "blur(14px)" : "none",
+          height: 60,
+          padding: "0 24px",
+          background: scrolled ? "rgba(239,237,231,0.9)" : "transparent",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
+          borderBottom: scrolled ? "1.5px solid #111" : "1.5px solid transparent",
+          transition: "background 0.3s, border-color 0.3s",
         }}
       >
+        {/* Brand — Poppins wordmark */}
         <Link href="/" className="flex items-center gap-2 no-underline" style={{ color: "#111" }}>
-          <Image src="/logo-yanegi.png" alt="Yanegi" width={42} height={42} style={{ objectFit: "contain" }} />
-          <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.3px", fontFamily: "var(--font-dm), sans-serif" }}>
+          <Image src="/logo-yanegi.png" alt="Yanegi" width={34} height={34} style={{ objectFit: "contain" }} />
+          <span className="brand" style={{ fontSize: 19, fontWeight: 800, letterSpacing: "-0.02em" }}>
             Yanegi
           </span>
         </Link>
 
-        <ul className="hidden md:flex list-none" style={{ gap: 28, justifyContent: "center" }}>
+        {/* Links */}
+        <ul className="hidden md:flex list-none" style={{ gap: 4, marginLeft: 36, alignItems: "center" }}>
           {NAV_LINKS.map((l) => (
             <li key={l}>
               {l === "FAQ" ? (
                 <button
                   onClick={() => setFaqOpen(true)}
-                  style={{
-                    background: "none", border: "none", cursor: "pointer",
-                    fontSize: 14, fontWeight: 500, color: "#111", opacity: 0.7,
-                    fontFamily: "var(--font-dm), sans-serif", padding: 0,
-                  }}
-                  className="transition-opacity hover:opacity-100"
+                  className="cursor-pointer transition-colors hover:bg-[#111] hover:text-[#c8f021]"
+                  style={{ background: "none", border: "none", padding: "8px 14px", borderRadius: 100, color: "#111", fontSize: 14, fontWeight: 600 }}
                 >
-                  FAQ
+                  {l}
                 </button>
               ) : (
                 <Link
                   href="#"
-                  className="no-underline transition-opacity hover:opacity-100"
-                  style={{ fontSize: 14, fontWeight: 500, color: "#111", opacity: 0.7, fontFamily: "var(--font-dm), sans-serif" }}
+                  className="no-underline transition-colors hover:bg-[#111] hover:text-[#c8f021]"
+                  style={{ padding: "8px 14px", borderRadius: 100, color: "#111", fontSize: 14, fontWeight: 600, display: "inline-block" }}
                 >
                   {l}
                 </Link>
@@ -67,32 +86,23 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center justify-end" style={{ gap: 12 }}>
+        <div style={{ flex: 1 }} />
+
+        {/* Right cluster */}
+        <div className="flex items-center" style={{ gap: 16 }}>
+          <SysClock />
           <Link
             href="/install"
-            className="no-underline transition-opacity hover:opacity-75 flex items-center gap-2"
-            style={{
-              background: "#fff",
-              border: "1.5px solid rgba(17,17,17,0.15)",
-              color: "#111",
-              padding: "8px 18px",
-              borderRadius: 100,
-              fontSize: 13,
-              fontWeight: 600,
-              fontFamily: "var(--font-dm), sans-serif",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
-            }}
+            className="no-underline hidden sm:flex items-center transition-transform hover:scale-105"
+            style={{ border: "2px solid #111", color: "#111", padding: "9px 18px", borderRadius: 100, fontSize: 13.5, fontWeight: 700, gap: 8 }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M4 20h16"/>
-            </svg>
-            Install App
+            Install app ↓
           </Link>
           <button
-            className="border-none cursor-pointer transition-opacity hover:opacity-75"
-            style={{ background: "#111", color: "#fff", padding: "9px 22px", borderRadius: 100, fontSize: 14, fontWeight: 500, fontFamily: "var(--font-dm), sans-serif" }}
+            className="border-none cursor-pointer transition-transform hover:scale-105 flex items-center"
+            style={{ background: "#111", color: "#fff", padding: "11px 20px", borderRadius: 100, fontSize: 13.5, fontWeight: 700, gap: 6 }}
           >
-            Signup
+            Signup <span style={{ color: "#c8f021" }}>↗</span>
           </button>
         </div>
       </nav>
